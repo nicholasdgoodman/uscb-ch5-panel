@@ -13,6 +13,7 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import AppleIcon from '@material-ui/icons/Apple';
 import MovieIcon from '@material-ui/icons/Movie';
 
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -63,9 +64,24 @@ export default function NavBar() {
   const classes = useStyles();
   const [value, setValue] = useState(0);
 
+  const tabs = [
+    { label: 'Desktop Computer', icon: <DesktopWindowsIcon />, join: '31' },
+    { label: 'Laptop Computer', icon: <LaptopIcon />, join: '32' },
+    { label: 'Document Camera', icon: <DescriptionIcon />, join: null },
+    { label: 'Apple TV', icon: <AppleIcon />, join: null },
+    { label: 'Blu-ray Video', icon: <MovieIcon />, join: null }
+  ];
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    console.log(newValue);
+
+    let tab = tabs[newValue];
+
+    if(tab.join) {
+      console.log('Triggering digital join', tab.join);
+      window.CrComLib.publishEvent('b', tab.join, true);
+      window.CrComLib.publishEvent('b', tab.join, false);
+    }
   };
 
   return (
@@ -81,11 +97,7 @@ export default function NavBar() {
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"
         >
-          <Tab label="Desktop Computer" icon={<DesktopWindowsIcon />} style={tabStyle} {...a11yProps(0)} />
-          <Tab label="Laptop Computer" icon={<LaptopIcon />} style={tabStyle} {...a11yProps(1)} />
-          <Tab label="Document Camera" icon={<DescriptionIcon />} style={tabStyle} {...a11yProps(2)} />
-          <Tab label="Apple TV" icon={<AppleIcon />} style={tabStyle} {...a11yProps(3)} />
-          <Tab label="Blueray Video" icon={<MovieIcon />} style={tabStyle} {...a11yProps(4)} />
+          { tabs.map((tab,n) => <Tab label={tab.label} icon={tab.icon} style={tabStyle} {...a11yProps(n)} key={n} />) }
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
