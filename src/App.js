@@ -13,7 +13,7 @@ const darkTheme = createTheme({
 });
 
 const App = () =>
-  <BrowserRouter basename="/uscb-ch5-panel/build">
+  <BrowserRouter>
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <Switch>
