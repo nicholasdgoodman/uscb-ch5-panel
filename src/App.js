@@ -1,7 +1,7 @@
 import { createTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 
 import PanelLayout from './components/PanelLayout';
 import XPanelLayout from './components/XPanelLayout';
@@ -13,7 +13,7 @@ const darkTheme = createTheme({
 });
 
 const App = () =>
-  <BrowserRouter basename="/uscb-ch5-panel/build">
+  <HashRouter basename={process.env.PUBLIC_URL}>
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <Switch>
@@ -22,7 +22,7 @@ const App = () =>
       </Switch>
 
     </ThemeProvider>
-  </BrowserRouter>
+  </HashRouter>
 ;
 
 export default App;
